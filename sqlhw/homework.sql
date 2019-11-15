@@ -198,3 +198,44 @@ ON movielens.movies.id = movielens.ratings.movie_id
 GROUP BY title
 HAVING a > 4
 ORDER BY a DESC;
+
+-- HARD MODE
+-- Question 27
+SELECT CONCAT('https://www.imdb.com/title/tt', imdb_Id)
+FROM movielens.links ;
+
+-- Question 28
+SELECT CONCAT('https://www.themoviedb.org/movie/', tmdb_Id)
+FROM movielens.links ;
+
+-- Question 29
+TV SHOW;
+
+-- Question 30
+SELECT REPLACE(LOWER(tag), ' ', '-')
+FROM movielens.tags ;
+
+-- Question 31
+UPDATE movielens.movies
+SET movie_year = SUBSTR(title, -6, 6)
+WHERE movie_year IS NULL
+
+-- Question 32
+UPDATE movielens.movies
+SET title = (SELECT REPLACE(title, SUBSTRING(title, -6, 6), ''))
+WHERE movies.id = movies.id
+
+-- Question 33 Couldn't get this one to work
+SELECT AVG(rating) a
+FROM movielens.ratings
+INNER JOIN movielens.movies
+ON movielens.movies.id = movielens.ratings.movie_id
+GROUP BY title
+
+UPDATE movielens.movies
+SET movie_rating = (SELECT AVG(rating) a
+FROM movielens.ratings
+INNER JOIN movielens.movies
+ON movielens.movies.id = movielens.ratings.movie_id
+GROUP BY title)
+WHERE movie_rating = ''
